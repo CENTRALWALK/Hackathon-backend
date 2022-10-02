@@ -1,11 +1,17 @@
 from flask import Flask, request, jsonify
-import json
+from flask_cors import CORS
+
 from seismic import SeismicProcessor
 import pandas as pd
 
 app = Flask(__name__)
 
+CORS(app)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 FILE = pd.read_csv("./data/nakamura_1979_sm_locations.csv")
+FILE = FILE.fillna("")
 
 seismic = SeismicProcessor(FILE)
 
